@@ -18,8 +18,11 @@
 
 #ifndef M6522_H
 #define M6522_H
-
+#if !defined (__CIRCLE__)
 #include "ioport.h"
+#else
+#include "IOPort.h"
+#endif
 #include "m65c02.h"
 
 class m6522

@@ -21,7 +21,9 @@
 // along with Pi1541. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rtc72421.h"
+#if !defined (__CIRCLE__)
 #include "rpihardware.h"
+#endif
 
 #define LIMIT_9(x) (((x) > 9) ? 9 : (x))
 

@@ -17,7 +17,13 @@
 // along with Pi1541. If not, see <http://www.gnu.org/licenses/>.
 
 #include "iec_bus.h"
+#if !defined (__CIRCLE__)
 #include "inputmappings.h"
+#else
+#include "InputMappings.h"
+using namespace CMD;
+#endif /*
+*/
 
 //#define REAL_XOR 1
 

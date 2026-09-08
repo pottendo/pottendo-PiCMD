@@ -24,8 +24,14 @@
 #include "m6522.h"
 
 #include "rpi-gpio.h"
+#if !defined (__CIRCLE__)
 #include "rpihardware.h"
+#endif
 
+#if defined (__CIRCLE__)
+namespace CMD
+{
+#endif /* defined (__CIRCLE__) */	
 
 #define INPUT_BUTTON_DEBOUNCE_THRESHOLD 20000
 #define INPUT_BUTTON_REPEAT_THRESHOLD 460000
@@ -355,6 +361,7 @@ public:
 		}
 	
 #if not defined(EXPERIMENTALZERO)
+#if !defined (__CIRCLE__)
 		// Set up audio.
 		write32(CM_PWMDIV, CM_PASSWORD + 0x2000);
 		write32(CM_PWMCTL, CM_PASSWORD + CM_ENAB + CM_SRC_OSCILLATOR);	// Use Default 100MHz Clock
@@ -362,6 +369,7 @@ public:
 		write32(PWM_RNG1, 0x1B4);	// 8bit 44100Hz Mono
 		write32(PWM_RNG2, 0x1B4);
 		write32(PWM_CTL, PWM_USEF2 + PWM_PWEN2 + PWM_USEF1 + PWM_PWEN1 + PWM_CLRF1);
+#endif
 #endif
 
 		for (index = 0; index < buttonCount; ++index)
@@ -859,4 +867,8 @@ private:
 	static u32 pressStartTime[5];
 
 };
+#if defined (__CIRCLE__)
+} /* namespace CMD */
 #endif
+
+#endif /* IEC_BUS_H */

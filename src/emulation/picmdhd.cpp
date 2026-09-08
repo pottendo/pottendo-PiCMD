@@ -23,6 +23,9 @@
 #include "picmdhd.h"
 #include "iec_bus.h"
 #include "debug.h"
+#if defined (__CIRCLE__)
+using namespace CMD;
+#endif
 
 extern PiCMDHD piCMDHD;
 

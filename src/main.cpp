@@ -19,6 +19,7 @@
 #include "defs.h"
 #include <string.h>
 #include <strings.h>
+#if !defined (__CIRCLE__)
 #include "types.h"
 #include "timer.h"
 #include "stb_image.h"
@@ -36,7 +37,7 @@ extern "C"
 }
 #include "inputmappings.h"
 #include "options.h"
-#include "iec_bus.h"
+#include "emulation/iec_bus.h"
 #include "diskio.h"
 #include "emmc.h"
 #include "picmdhd.h"
@@ -45,10 +46,29 @@ extern "C"
 #include "filebrowser.h"
 #include "screenlcd.h"
 #include "spinlock.h"
-
+#else
+#include "circle-kernel.h"
+#include "stb_image.h"
+extern "C"
+{
+#include "circle-types.h"	
+#include "rpi-mailbox.h"
+}
+#include "InputMappings.h"
+#include "Options.h"
+#include "emulation/iec_bus.h"
+#include "diskio.h"
+#include "emmc.h"
+#include "emulation/picmdhd.h"
+#include "emulation/scsi.h"
+#include "Screen.h"
+#include "FileBrowser.h"
+#include "ScreenLCD.h"
+#endif /* !defined (__CIRCLE__) */
 #include "logo.h"
 #include "ssd_logo.h"
 
+#if !defined (__CIRCLE__)
 unsigned versionMajor = 1;
 unsigned versionMinor = 24;
 
@@ -86,7 +106,17 @@ u8 LcdLogoFile[LCD_LOGO_MAX_SIZE];
 u8 s_u8Memory[0xc000];
 
 int numberOfUSBMassStorageDevices = 0;
+#endif /* !defined (__CIRCLE__) */
+
 PiCMDHD piCMDHD;
+
+#if defined (__CIRCLE__)
+extern Options options;
+extern InputMappings* inputMappings;
+using namespace CMD; // ensure the proper IEC_Bus is used when building with Circle, which has its own namespace.
+#endif /* defined (__CIRCLE__) */
+
+#if !defined (__CIRCLE__)
 CEMMCDevice	m_EMMC;
 Screen screen;
 ScreenLCD* screenLCD = 0;
@@ -929,6 +959,7 @@ void CheckAutoMountImage(EXIT_TYPE reset_reason , FileBrowser* fileBrowser)
 		}
 	}
 }
+#endif /* !defined (__CIRCLE__) */
 
 // The CMD HD's four front panel buttons are mapped onto the board's buttons
 // while emulating. The defaults are (all remappable in options.txt);-
@@ -1156,7 +1187,7 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 
 	return exitReason;
 }
-
+#if !defined(__CIRCLE__)
 void emulator()
 {
 #if not defined(EXPERIMENTALZERO)
@@ -1877,3 +1908,4 @@ extern "C"
 	}
 }
 
+#endif /* !defined (__CIRCLE__) */
