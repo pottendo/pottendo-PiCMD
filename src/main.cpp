@@ -994,7 +994,7 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 	u32 quietLoops = 0;
 	u32 flushAfterLoops = FLUSH_IDLE_LOOPS;
 
-#if defined (CMDHD_SUPPORT)	
+#if defined (__CIRCLE__)	
 	IEC_Bus::SetSplitIECLines(options.SplitIECLines());
 	IEC_Bus::SetInvertIECInputs(options.InvertIECInputs());
 	IEC_Bus::SetInvertIECOutputs(options.InvertIECOutputs());
