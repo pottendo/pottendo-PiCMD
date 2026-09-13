@@ -1011,8 +1011,6 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 
 	inputMappings->directDiskSwapRequest = 0;
 
-	DEBUG_LOG("%s: entering emulation loop", __FUNCTION__);
-
 	// Force an update on all the buttons now before we start emulation mode.
 	IEC_Bus::ReadBrowseMode();
 
@@ -1030,7 +1028,7 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 #else
 	ctBefore = read32(ARM_SYSTIMER_CLO);
 #endif
-	DEBUG_LOG("%s: entering emulation loop", __FUNCTION__);
+
 	while (exitReason == EXIT_UNKNOWN)
 	{
 		IEC_Bus::ReadEmulationModeCMDHD();
