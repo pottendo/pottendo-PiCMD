@@ -635,6 +635,7 @@ public:
 		unsigned set = 0;
 		unsigned clear = 0;
 		unsigned tmp;
+
 		RefreshIECOutsNow();	// DATA/CLOCK, event-driven ordering-safe path
 
 		if (splitIECLines)
@@ -657,6 +658,7 @@ public:
 
 		write32(ARM_GPIO_GPSET0, set);
 		write32(ARM_GPIO_GPCLR0, clear);
+		
 		// ATN out is handled by RefreshIECOutsNow above, on both wirings.
 	}
 
