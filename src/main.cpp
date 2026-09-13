@@ -47,6 +47,7 @@ extern "C"
 #include "screenlcd.h"
 #include "spinlock.h"
 #else
+#define CMDHD_SUPPORT
 #include "circle-kernel.h"
 #include "stb_image.h"
 extern "C"
@@ -992,6 +993,12 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 	u32 lastAccessCount = 0;
 	u32 quietLoops = 0;
 	u32 flushAfterLoops = FLUSH_IDLE_LOOPS;
+	
+		IEC_Bus::SetSplitIECLines(options.SplitIECLines());
+		IEC_Bus::SetInvertIECInputs(options.InvertIECInputs());
+		IEC_Bus::SetInvertIECOutputs(options.InvertIECOutputs());
+		IEC_Bus::SetIgnoreReset(options.IgnoreReset());
+		IEC_Bus::SetAtnOutGPIO(options.GetCMDHDAtnOutGPIO());
 
 	unsigned buttonSwap8 = options.GetCMDHDButtonSwap8();
 	unsigned buttonSwap9 = options.GetCMDHDButtonSwap9();
@@ -1003,6 +1010,9 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 	bool exitButtonPrev = false;
 
 	inputMappings->directDiskSwapRequest = 0;
+
+	DEBUG_LOG("%s: entering emulation loop", __FUNCTION__);
+
 	// Force an update on all the buttons now before we start emulation mode.
 	IEC_Bus::ReadBrowseMode();
 
@@ -1020,7 +1030,7 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 #else
 	ctBefore = read32(ARM_SYSTIMER_CLO);
 #endif
-
+	DEBUG_LOG("%s: entering emulation loop", __FUNCTION__);
 	while (exitReason == EXIT_UNKNOWN)
 	{
 		IEC_Bus::ReadEmulationModeCMDHD();

@@ -463,7 +463,7 @@ void PiCMDHD::Reset()
 {
 	int units;
 	int i;
-
+	DEBUG_LOG("%s: CMDHD: Resetting drive", __FUNCTION__);
 	// Write back a bounded amount before the drive restarts.
 	//
 	// Reset is a good moment to get dirty chunks onto the card - the machine

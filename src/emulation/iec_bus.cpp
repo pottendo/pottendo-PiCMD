@@ -145,7 +145,7 @@ void IEC_Bus::ReadEmulationModeCMDHD(void)
 	bool AtnaDataSetToOutOld = AtnaDataSetToOut;
 	IOPort* portB = 0;
 	gplev0 = read32(ARM_GPIO_GPLEV0);
-
+	//DEBUG_LOG("%s: - gplev0 = %04x\n", __FUNCTION__, gplev0);
 	portB = port;
 
 #ifndef REAL_XOR
@@ -325,6 +325,8 @@ void IEC_Bus::PortB_OnPortOut(void* pUserData, unsigned char status)
 
 void IEC_Bus::Reset(void)
 {
+	DEBUG_LOG("%s: IEC CMDHD: Resetting drive", __FUNCTION__);
+
 	WaitUntilReset();
 
 	// VIA $1800

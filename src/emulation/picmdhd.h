@@ -36,12 +36,18 @@
 #include "i8255a.h"
 #include "rtc72421.h"
 #include "scsi.h"
+#if defined (__CIRCLE__)
+#if !defined (PI1541BUILD)
+using namespace CMD_6522;
+#endif
+#endif
 
 class PiCMDHD
 {
 public:
 	PiCMDHD();
 
+	IEC_Bus &getIEC() { return IEC_Bus::IEC_Bus; }
 	void Initialise();
 	void Update();		// One 2MHz CPU cycle worth of house keeping.
 	void Reset();

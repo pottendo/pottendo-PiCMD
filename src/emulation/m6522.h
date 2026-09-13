@@ -25,6 +25,11 @@
 #endif
 #include "m65c02.h"
 
+#if defined (__CIRCLE__)
+namespace CMD_6522
+{
+#endif /* defined (__CIRCLE__) */
+
 class m6522
 {
 	// $1800
@@ -390,5 +395,7 @@ private:
 	unsigned char cb2Shift;  // version of cb2 controlled by the shift register
 	bool cb1OutputShiftClockPositiveEdge;
 };
-
+#if defined (__CIRCLE__)
+} // namespace CMD_6522
+#endif /* defined (__CIRCLE__) */
 #endif
