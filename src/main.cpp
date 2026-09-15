@@ -1141,7 +1141,22 @@ EXIT_TYPE EmulateCMDHD(FileBrowser* fileBrowser)
 		exitEmulation |= inputMappings->KeyboardEscape();
 #endif
 		bool exitDoAutoLoad = inputMappings->AutoLoad();
-
+#if defined(__CIRCLE__)
+extern bool webserver_upload;
+		if (webserver_upload)
+		{
+			DEBUG_LOG("%s: webserver upload done.", __FUNCTION__);
+			webserver_upload = false;
+			exitDoAutoLoad = true;
+		}
+extern char mount_img[256];
+extern int mount_new;
+		if (mount_new)
+		{
+			DEBUG_LOG("%s: mount_img = '%s'", __FUNCTION__, mount_img);
+			exitEmulation = true;
+		}
+#endif		
 		if (exitEmulation || exitDoAutoLoad)
 		{
 			if (exitEmulation)
